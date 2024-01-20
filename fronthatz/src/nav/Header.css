@@ -1,0 +1,18 @@
+/* Header.css */
+.header {
+    background-color: #ff69b4;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.nav-tabs .nav-link {
+    background-color: #ff69b4;
+    color: white;
+    margin: 5px;
+    padding: 10px 20px;
+}
+
+.nav-tabs .nav-link:hover {
+    background-color: #ff3385;
+    color: white;
+}

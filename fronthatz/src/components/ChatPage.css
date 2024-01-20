@@ -1,0 +1,56 @@
+/* ChatPage.css */
+
+.chat-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff; /* Set the background color for the chat box */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+.chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.chat-message {
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+/* Apply different styles for messages from the sender */
+.chat-message.self {
+    background-color: #e6f7ff; /* Light blue for messages sent by the user */
+    color: #007bff; /* Blue text color */
+}
+
+/* Apply different styles for messages from others */
+.chat-message.other {
+    background-color: #f0f0f0; /* Light gray for messages received from others */
+    color: #333; /* Darker text color */
+}
+
+.chat-input {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.chat-input input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.chat-input button {
+    padding: 8px;
+    background-color: #007bff; /* Blue for the send button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

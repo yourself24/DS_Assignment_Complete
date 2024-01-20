@@ -1,0 +1,140 @@
+version: '3.9'
+
+services:
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: "rabbitmq:3.12"
+    ports:
+     - "5673:5672"
+     - "15673:15672"
+    environment:
+     - RABBITMQ_DEFAULT_USER=guest
+     - RABBITMQ_DEFAULT_PASS=guest
+
+
+  java_app:
+    container_name: java_app
+    image: usermicro/java_app:1.0.0
+    build: ./UserMicro
+    ports:
+      - 8080:8080
+    environment:
+      - DATABASE_URL=jdbc:postgresql://java_db:5432/userzz
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+    depends_on:
+      - java_db
+      
+  java_db:
+    container_name: java_db
+    image: postgres:12
+    ports:
+      - 5433:5433
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: userzz
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  java_app2:
+    container_name: java_app2
+    image: devicemicro/java_app2:1.0.0
+    build: ./DeviceMicro
+    ports:
+      - 8089:8089
+    environment:
+      - DATABASE_URL=jdbc:postgresql://java_db2:5432/devicezz
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+    depends_on:
+      - java_db2
+
+  java_db2:
+    container_name: java_db2
+    image: postgres:12
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: devicezz
+    volumes:
+      - pgdata2:/var/lib/postgresql/data
+
+  java_app3:
+    container_name: java_app3
+    image: monitoringmicro/java_app3:1.0.0
+    build: ./monitoringMicro
+    ports:
+      - 8087:8087
+    environment:
+      - DATABASE_URL=jdbc:postgresql://java_db3:5432/energydb
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+      - RABBITMQ_HOST=host.docker.internal
+      - RABBITMQ_PORT=5672
+    depends_on:
+      - java_db3
+      - rabbitmq
+
+  java_db3:
+    container_name: java_db3
+    image: postgres:12
+    ports:
+      - 5435:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: energydb
+    volumes:
+      - pgdata3:/var/lib/postgresql/data
+  
+  java_chat:
+    container_name: java_chat
+    image: chatmicro/java_chat:1.0.0
+    build: ./chatMicro
+    ports:
+      - 8088:8088
+    environment:
+      - DATABASE_URL=jdbc:postgresql://chat_db:5432/chatMicro
+      - DATABASE_USERNAME=postgres
+      - DATABASE_PASSWORD=postgres
+    depends_on:
+      - java_db
+      
+  chat_db:
+    container_name: chat_db
+    image: postgres:12
+    ports:
+      - 5438:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: chatMicro
+    volumes:
+      - pgdata4:/var/lib/postgresql/data
+
+    
+  react_app:
+    container_name: react_app
+    build: ./fronthatz
+    ports:
+     - "5173:5173"
+
+  python_script:
+   container_name: python_script
+   image: python:3.12
+   build: ./CSVReader
+   command: ["python", "energymgmt.py"]
+   depends_on:
+    - rabbitmq
+   volumes:
+    - ./CSVReader:/app
+
+volumes:
+  pgdata: {}
+  pgdata2: {}
+  pgdata3: {}
+  pgdata4: {}

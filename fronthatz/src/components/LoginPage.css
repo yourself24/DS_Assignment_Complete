@@ -1,0 +1,48 @@
+/* Center the login container vertically and horizontally */
+.login-container {
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style the login content */
+.login-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Style the login form */
+.login-form {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Add spacing between form elements */
+.login-form .ant-form-item {
+    margin-bottom: 10px;
+}
+
+/* Style the login button */
+.login-form-button {
+    width: 100%;
+    background-color: #1890ff;
+    color: #fff;
+    border: none;
+}
+
+/* Add some padding to the error message */
+.ant-alert-error {
+    padding: 10px;
+}
+
+/* Optional: Style the login form title */
+.login-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
